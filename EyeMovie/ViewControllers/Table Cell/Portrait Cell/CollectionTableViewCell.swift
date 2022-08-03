@@ -32,17 +32,15 @@ class CollectionTableViewCell: UITableViewCell, UICollectionViewDelegate, UIColl
         collectionView.delegate = self
         collectionView.dataSource = self
     }
-
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
+        
         // Configure the view for the selected state
     }
     
     //CollectionView
     
-//    self.collectionView.showsVerticalScrollIndicator = false
-//    self.collectionView.showsHorizontalScrollIndicator = false
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return movies.count
@@ -59,9 +57,17 @@ class CollectionTableViewCell: UITableViewCell, UICollectionViewDelegate, UIColl
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         //TODO: make the collection view cell the right dimenstion 1080*1920 maybe??
         
-//        return UIImage(named: movies[indexPath.row].imagePath)!.size as CGSize
+        //        return UIImage(named: movies[indexPath.row].imagePath)!.size as CGSize
         
-        return CGSize(width: 180, height: 250)
+        return CGSize(width: 150, height: 400)
+        
+        
+        
+        
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 0,left: -20,bottom: 0,right: 0)
     }
     
 }

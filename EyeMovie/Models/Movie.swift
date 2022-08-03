@@ -7,6 +7,12 @@
 
 import Foundation
 
+//enum Category{
+//    case popular
+//    case upcoming
+//    case topRated
+//}
+
 struct Movie {
     let title: String
     let imagePath: String
