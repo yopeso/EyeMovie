@@ -19,7 +19,14 @@ class APIService {
         
     }
     
-    func getData(url: URL, completion: @escaping ([Movie]) -> Void) {
-        
-    }
+    let url = URL(string: "https://api.themoviedb.org/3/trending/all/week?api_key=eb21f459f41bb6dc060c3faee159b32d")
+    
+    
+//    func getData(url: URL, completion: @escaping ([Movie]) -> Void) {
+//        guard url != nil else {
+//            print("Error creating url object")
+//        }
+//
+//        var request = URLRequest(url: url, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 10)
+//    }
 }

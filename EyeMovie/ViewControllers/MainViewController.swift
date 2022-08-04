@@ -17,12 +17,10 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     let api = APIService()
     
     @IBOutlet var topTable: UITableView!
-    @IBOutlet var middleTable: UITableView!
-    //@IBOutlet var bottomTable: UITableView!
+    
     
     var topTableMoviesData = [Movie]()
     var middleTableMoviesData = [Movie]()
-    //var bottomTableMoviesData = [Movie]()
     
     private func addMockModels(){
         topTableMoviesData.append(Movie(title: "Movie 1", imagePath: "movie1"))
@@ -38,43 +36,35 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        addMockModels()
+        //addMockModels()
         
         //registration of the cells
         topTable.register(CollectionTableViewCell.nib(), forCellReuseIdentifier: CollectionTableViewCell.identifier)
         
-        middleTable.register(CollectionTableViewCell.nib(), forCellReuseIdentifier: CollectionTableViewCell.identifier)
-        
-        
         topTable.delegate = self
         topTable.dataSource = self
-        
-        middleTable.delegate = self
-        middleTable.dataSource = self
-        
-//        bottomTable.delegate = self
-//        bottomTable.dataSource = self
         
         //Making the tableViews non scrollable
         
         topTable.isScrollEnabled = false
-        middleTable.isScrollEnabled = false
-        
+        topTable.separatorColor = UIColor.clear
         
         // Do any additional setup after loading the view.
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-
+        
         print("making a call")
         api.getMockData(url: URL(string: "www.google.com")!) { movies in //should i use weakself?
             print(movies)
-            //self.topTableMoviesData = movies
-            //self.topTable.reloadData()
-
-//            self.middleTableMoviesData = movies
-//            self.middleTable.reloadData()
+            self.topTableMoviesData = movies
+            
+            
+            self.middleTableMoviesData = movies
+            
+            
+            self.topTable.reloadData()
         }
     }
     
@@ -85,45 +75,67 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = CollectionTableViewCell()
-        switch tableView{
-        case topTable:
+        
+        
+        if indexPath.section == 0 {
             let cell = topTable.dequeueReusableCell(withIdentifier: CollectionTableViewCell.identifier, for: indexPath) as! CollectionTableViewCell
             
             cell.configure(with: topTableMoviesData)
-        case middleTable:
-            let cell = middleTable.dequeueReusableCell(withIdentifier: CollectionTableViewCell.identifier, for: indexPath) as! CollectionTableViewCell
-            
-            cell.configure(with: middleTableMoviesData)
-        default:
-            print("something went wrong")
+            return cell
             
         }
-        //        let cell = topTable.dequeueReusableCell(withIdentifier: CollectionTableViewCell.identifier, for: indexPath) as! CollectionTableViewCell
-        //
-        //        cell.configure(with: topTableMoviesData)
-        //
-        return cell
+        else
+        {
+            let cell = topTable.dequeueReusableCell(withIdentifier: CollectionTableViewCell.identifier, for: indexPath) as! CollectionTableViewCell
+            
+            cell.configure(with: middleTableMoviesData)
+            return cell
+            
+        }
+        
     }
-    
     
     //the height of the row that holds the collection view
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         //TODO: set the right height
-        if tableView == topTable{
-            return 300
+        if indexPath.section == 0{
+            return 250
         }
-        else if tableView == middleTable{
+        else{
             return 100
         }
-        else {return 200}
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return 2
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        
+        if section == 0 {
+            return "Top movies"
+        }
+        else {
+            return "Upcoming movies"
+        }
+    }
+    
+    
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        
+        guard let header = view as? UITableViewHeaderFooterView else { return }
+        header.textLabel?.textColor = UIColor.gray
+        header.textLabel?.font = UIFont.boldSystemFont(ofSize: 18)
+        header.textLabel?.frame = header.bounds
+        header.textLabel?.textAlignment = .left
+        
+        
     }
     
 }
+
+
+
 
 
 
