@@ -16,7 +16,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <tabBarAppearance key="scrollEdgeAppearance"/>
                     </tabBar>
                     <connections>
                         <segue destination="nHy-lz-nFX" kind="relationship" relationship="viewControllers" id="h3F-NT-y8F"/>
@@ -31,7 +30,7 @@
         <!--Main-->
         <scene sceneID="nzb-xu-5cb">
             <objects>
-                <navigationController toolbarHidden="NO" id="nHy-lz-nFX" sceneMemberID="viewController">
+                <navigationController id="nHy-lz-nFX" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Main" image="homekit" catalog="system" id="RFa-PT-Wdh"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="X6R-PA-qy6">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -55,7 +54,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="YI1-yx-iF2">
-                                <rect key="frame" x="0.0" y="88" width="414" height="777"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </tableView>
                         </subviews>
@@ -63,7 +62,7 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="YI1-yx-iF2" firstAttribute="top" secondItem="VGs-uA-1z7" secondAttribute="top" id="5aa-Bf-8rD"/>
-                            <constraint firstItem="VGs-uA-1z7" firstAttribute="bottom" secondItem="YI1-yx-iF2" secondAttribute="bottom" constant="-101" id="7YQ-vY-2ZN"/>
+                            <constraint firstItem="VGs-uA-1z7" firstAttribute="bottom" secondItem="YI1-yx-iF2" secondAttribute="bottom" id="7YQ-vY-2ZN"/>
                             <constraint firstItem="YI1-yx-iF2" firstAttribute="leading" secondItem="VGs-uA-1z7" secondAttribute="leading" id="JyX-Jw-4s3"/>
                             <constraint firstItem="VGs-uA-1z7" firstAttribute="trailing" secondItem="YI1-yx-iF2" secondAttribute="trailing" id="ZcA-ph-TSr"/>
                         </constraints>

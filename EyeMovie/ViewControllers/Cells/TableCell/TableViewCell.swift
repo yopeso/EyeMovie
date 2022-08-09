@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CollectionTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class TableViewCell: UITableViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     static let identifier = "CollectionTableViewCell"
     
@@ -18,8 +18,9 @@ class CollectionTableViewCell: UITableViewCell, UICollectionViewDelegate, UIColl
     @IBOutlet var collectionView: UICollectionView!
     
     var movies = [Movie]()
+  var isPortrait = true
     
-    func configure(with movies: [Movie]){
+    func configure(with movies: [Movie]) {
         self.movies = movies
         collectionView.reloadData()
     }
@@ -49,19 +50,18 @@ class CollectionTableViewCell: UITableViewCell, UICollectionViewDelegate, UIColl
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MyCollectionViewCell.identifier, for: indexPath) as! MyCollectionViewCell
         
-        cell.configure(with: movies[indexPath.row])
+        cell.configure(with: movies[indexPath.row], landscape: !isPortrait)
         
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        //TODO: make the collection view cell the right dimenstion 1080*1920 maybe??
-        
-        //        return UIImage(named: movies[indexPath.row].imagePath)!.size as CGSize
-        
+
+      if isPortrait {
         return CGSize(width: 170, height: 300)
-        //return CGSize(width: 150, height: 250)
-        
+      } else {
+        return CGSize(width: 170, height: 150)
+      }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {

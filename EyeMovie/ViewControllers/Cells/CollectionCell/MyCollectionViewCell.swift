@@ -27,7 +27,7 @@ class MyCollectionViewCell: UICollectionViewCell {
     }
     
     //configure the cell by passing a model(movie in our case)
-    public func configure(with movie: Movie){
+  public func configure(with movie: Movie, landscape: Bool) {
         self.myLabel.text = movie.title
         //self.myImageView.image = UIImage(named: movie.imagePath!)
         
@@ -37,7 +37,7 @@ class MyCollectionViewCell: UICollectionViewCell {
         
         
         
-        if movie.isLandscape {
+        if landscape {
             urlString = "https://image.tmdb.org/t/p/w780" + posterStringLandscape
         } else {
             urlString = "https://image.tmdb.org/t/p/w300" + posterString
@@ -57,7 +57,7 @@ class MyCollectionViewCell: UICollectionViewCell {
     }
     
     //MARK: -get image data
-    private func getImageDataFrom(url: URL){
+    private func getImageDataFrom(url: URL) {
         URLSession.shared.dataTask(with: url) { (data, response, error) in
             //Handle error
             if let error = error {

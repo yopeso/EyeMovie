@@ -23,7 +23,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     var middleSectionMoviesData = [Movie]()
     var downSectionMoviesData = [Movie]()
     
-//    private func addMockModels(){
+//    private func addMockModels() {
 //        topTableMoviesData.append(Movie(title: "Movie 1", imagePath: "movie1"))
 //        topTableMoviesData.append(Movie(title: "Movie 2", imagePath: "movie2"))
 //        topTableMoviesData.append(Movie(title: "Movie 3", imagePath: "movie3"))
@@ -40,7 +40,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         //addMockModels()
         
         //registration of the cells
-        topTable.register(CollectionTableViewCell.nib(), forCellReuseIdentifier: CollectionTableViewCell.identifier)
+        topTable.register(TableViewCell.nib(), forCellReuseIdentifier: TableViewCell.identifier)
         
         topTable.delegate = self
         topTable.dataSource = self
@@ -62,18 +62,10 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
             self?.topTable.reloadData()
         }
         
-        //Applying the gradient
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.frame = view.bounds
-        gradientLayer.colors = [
-            UIColor.systemGray
-        ]
-        view.layer.addSublayer(gradientLayer)
-        
         // Do any additional setup after loading the view.
     }
     
-    private func fetchPopularMoviesData(completion: @escaping () -> ()){
+    private func fetchPopularMoviesData(completion: @escaping () -> ()) {
         
         // weak self - prevent retain cycles
         api.getPopularMoviesData { [weak self] (result) in
@@ -89,7 +81,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
     
-    private func fetchUpcomingMoviesData(completion: @escaping () -> ()){
+    private func fetchUpcomingMoviesData(completion: @escaping () -> ()) {
         // weak self - prevent retain cycles
         api.getUpcomingMoviesData { [weak self] (result) in
             print(result)
@@ -104,7 +96,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
     
-    private func fetchTopRatedMoviesData(completion: @escaping () -> ()){
+    private func fetchTopRatedMoviesData(completion: @escaping () -> ()) {
         // weak self - prevent retain cycles
         api.getTopRatedMoviesData { [weak self] (result) in
             print(result)
@@ -129,31 +121,24 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         
         if indexPath.section == 0 {
-            let cell = topTable.dequeueReusableCell(withIdentifier: CollectionTableViewCell.identifier, for: indexPath) as! CollectionTableViewCell
+            let cell = topTable.dequeueReusableCell(withIdentifier: TableViewCell.identifier, for: indexPath) as! TableViewCell
                         
             cell.configure(with: topSectionMoviesData)
+          cell.isPortrait = indexPath.section == 0
             return cell
             
         }
         
         if indexPath.section == 1 {
-            let cell = topTable.dequeueReusableCell(withIdentifier: CollectionTableViewCell.identifier, for: indexPath) as! CollectionTableViewCell
-            
-            for m in middleSectionMoviesData{
-                m.isLandscape = true
-            }
-            
+            let cell = topTable.dequeueReusableCell(withIdentifier: TableViewCell.identifier, for: indexPath) as! TableViewCell
             cell.configure(with: middleSectionMoviesData)
+          cell.isPortrait = indexPath.section == 0
             return cell
             
         } else {
-            let cell = topTable.dequeueReusableCell(withIdentifier: CollectionTableViewCell.identifier, for: indexPath) as! CollectionTableViewCell
-            
-            for m in downSectionMoviesData{
-                m.isLandscape = true
-            }
-            
+            let cell = topTable.dequeueReusableCell(withIdentifier: TableViewCell.identifier, for: indexPath) as! TableViewCell
             cell.configure(with: downSectionMoviesData)
+          cell.isPortrait = indexPath.section == 0
             return cell
         }
         

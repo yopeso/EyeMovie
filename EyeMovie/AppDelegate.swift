@@ -21,7 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
-    func setUpNavigationBar(){
+    func setUpNavigationBar() {
 //        let appearance = UINavigationBarAppearance()
 //        appearance.configureWithOpaqueBackground()
 //        //appearance.backgroundColor = <your tint color>

@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5618E00828991D2F008022CF /* CollectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5618E00628991D2F008022CF /* CollectionTableViewCell.swift */; };
+		3314CC3928A296170032DF1B /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3314CC3828A296170032DF1B /* TableViewCell.swift */; };
 		5618E00928991D2F008022CF /* CollectionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5618E00728991D2F008022CF /* CollectionTableViewCell.xib */; };
 		5618E00C28991D56008022CF /* MyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5618E00A28991D56008022CF /* MyCollectionViewCell.swift */; };
 		5618E00D28991D56008022CF /* MyCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5618E00B28991D56008022CF /* MyCollectionViewCell.xib */; };
@@ -26,7 +26,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		5618E00628991D2F008022CF /* CollectionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionTableViewCell.swift; sourceTree = "<group>"; };
+		3314CC3828A296170032DF1B /* TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		5618E00728991D2F008022CF /* CollectionTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CollectionTableViewCell.xib; sourceTree = "<group>"; };
 		5618E00A28991D56008022CF /* MyCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCollectionViewCell.swift; sourceTree = "<group>"; };
 		5618E00B28991D56008022CF /* MyCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MyCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -57,31 +57,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		5618E00428991CEB008022CF /* Table Cell */ = {
+		5618E00428991CEB008022CF /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				5618E00528991CF8008022CF /* Collection Cell */,
-				5618E014289A713C008022CF /* Portrait Cell */,
+				5618E00528991CF8008022CF /* CollectionCell */,
+				5618E014289A713C008022CF /* TableCell */,
 			);
-			path = "Table Cell";
+			path = Cells;
 			sourceTree = "<group>";
 		};
-		5618E00528991CF8008022CF /* Collection Cell */ = {
+		5618E00528991CF8008022CF /* CollectionCell */ = {
 			isa = PBXGroup;
 			children = (
 				5618E00A28991D56008022CF /* MyCollectionViewCell.swift */,
 				5618E00B28991D56008022CF /* MyCollectionViewCell.xib */,
 			);
-			path = "Collection Cell";
+			path = CollectionCell;
 			sourceTree = "<group>";
 		};
-		5618E014289A713C008022CF /* Portrait Cell */ = {
+		5618E014289A713C008022CF /* TableCell */ = {
 			isa = PBXGroup;
 			children = (
-				5618E00628991D2F008022CF /* CollectionTableViewCell.swift */,
+				3314CC3828A296170032DF1B /* TableViewCell.swift */,
 				5618E00728991D2F008022CF /* CollectionTableViewCell.xib */,
 			);
-			path = "Portrait Cell";
+			path = TableCell;
 			sourceTree = "<group>";
 		};
 		5687C95D289A951A00495178 /* APIService */ = {
@@ -95,7 +95,7 @@
 		56BC2549289818D20058574A /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				5618E00428991CEB008022CF /* Table Cell */,
+				5618E00428991CEB008022CF /* Cells */,
 				56BC254328980FD90058574A /* SearchViewController.swift */,
 				56EBA6C22898012A00B5D5D4 /* MainViewController.swift */,
 				56BC254528980FF90058574A /* FavoriteViewController.swift */,
@@ -227,8 +227,8 @@
 				56EBA6BF2898012A00B5D5D4 /* AppDelegate.swift in Sources */,
 				56BC254628980FF90058574A /* FavoriteViewController.swift in Sources */,
 				56EBA6C12898012A00B5D5D4 /* SceneDelegate.swift in Sources */,
+				3314CC3928A296170032DF1B /* TableViewCell.swift in Sources */,
 				5687C95F289A962200495178 /* APIService.swift in Sources */,
-				5618E00828991D2F008022CF /* CollectionTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
