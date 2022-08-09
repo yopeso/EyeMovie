@@ -18,7 +18,7 @@ class TableViewCell: UITableViewCell, UICollectionViewDelegate, UICollectionView
     @IBOutlet var collectionView: UICollectionView!
     
     var movies = [Movie]()
-  var isPortrait = true
+    var isPortrait = true
     
     func configure(with movies: [Movie]) {
         self.movies = movies
@@ -56,12 +56,12 @@ class TableViewCell: UITableViewCell, UICollectionViewDelegate, UICollectionView
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-
-      if isPortrait {
-        return CGSize(width: 170, height: 300)
-      } else {
-        return CGSize(width: 170, height: 150)
-      }
+        
+        if isPortrait {
+            return CGSize(width: 170, height: 300)
+        } else {
+            return CGSize(width: 170, height: 150)
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {

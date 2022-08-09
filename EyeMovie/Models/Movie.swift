@@ -20,9 +20,6 @@ class Movie: Decodable {
     let imagePath: String?
     let landscapePath: String?
   
-//  var ceParereArePontaDespreFilm
-//    var isLandscape: Bool = false
-    
     init(title: String, imagePath: String, landscapePath: String) {
         self.title = title
         self.imagePath = imagePath
@@ -35,7 +32,4 @@ class Movie: Decodable {
         case landscapePath = "backdrop_path"
     }
     
-//    func makeLandscapeTrue() {
-//        self.isLandscape = true
-//    }
 }

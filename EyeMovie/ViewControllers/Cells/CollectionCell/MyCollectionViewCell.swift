@@ -27,14 +27,12 @@ class MyCollectionViewCell: UICollectionViewCell {
     }
     
     //configure the cell by passing a model(movie in our case)
-  public func configure(with movie: Movie, landscape: Bool) {
+    public func configure(with movie: Movie, landscape: Bool) {
         self.myLabel.text = movie.title
         //self.myImageView.image = UIImage(named: movie.imagePath!)
         
         guard let posterString = movie.imagePath else {return}
         guard let posterStringLandscape = movie.landscapePath else {return}
-        
-        
         
         
         if landscape {
@@ -76,8 +74,8 @@ class MyCollectionViewCell: UICollectionViewCell {
                     self.myImageView.image = image
                 }
             }
-
+            
         }.resume()
     }
-
+    
 }

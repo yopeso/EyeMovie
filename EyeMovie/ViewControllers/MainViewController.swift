@@ -23,17 +23,17 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     var middleSectionMoviesData = [Movie]()
     var downSectionMoviesData = [Movie]()
     
-//    private func addMockModels() {
-//        topTableMoviesData.append(Movie(title: "Movie 1", imagePath: "movie1"))
-//        topTableMoviesData.append(Movie(title: "Movie 2", imagePath: "movie2"))
-//        topTableMoviesData.append(Movie(title: "Movie 3", imagePath: "movie3"))
-//
-//        //middle table
-//
-//        middleTableMoviesData.append(Movie(title: "Movie 3", imagePath: "movie3"))
-//        middleTableMoviesData.append(Movie(title: "Movie 2", imagePath: "movie2"))
-//        middleTableMoviesData.append(Movie(title: "Movie 1", imagePath: "movie1"))
-//    }
+    //    private func addMockModels() {
+    //        topTableMoviesData.append(Movie(title: "Movie 1", imagePath: "movie1"))
+    //        topTableMoviesData.append(Movie(title: "Movie 2", imagePath: "movie2"))
+    //        topTableMoviesData.append(Movie(title: "Movie 3", imagePath: "movie3"))
+    //
+    //        //middle table
+    //
+    //        middleTableMoviesData.append(Movie(title: "Movie 3", imagePath: "movie3"))
+    //        middleTableMoviesData.append(Movie(title: "Movie 2", imagePath: "movie2"))
+    //        middleTableMoviesData.append(Movie(title: "Movie 1", imagePath: "movie1"))
+    //    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -122,9 +122,9 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         if indexPath.section == 0 {
             let cell = topTable.dequeueReusableCell(withIdentifier: TableViewCell.identifier, for: indexPath) as! TableViewCell
-                        
+            
             cell.configure(with: topSectionMoviesData)
-          cell.isPortrait = indexPath.section == 0
+            cell.isPortrait = indexPath.section == 0
             return cell
             
         }
@@ -132,13 +132,13 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         if indexPath.section == 1 {
             let cell = topTable.dequeueReusableCell(withIdentifier: TableViewCell.identifier, for: indexPath) as! TableViewCell
             cell.configure(with: middleSectionMoviesData)
-          cell.isPortrait = indexPath.section == 0
+            cell.isPortrait = indexPath.section == 0 // or = false
             return cell
             
         } else {
             let cell = topTable.dequeueReusableCell(withIdentifier: TableViewCell.identifier, for: indexPath) as! TableViewCell
             cell.configure(with: downSectionMoviesData)
-          cell.isPortrait = indexPath.section == 0
+            cell.isPortrait = indexPath.section == 0 
             return cell
         }
         
@@ -148,7 +148,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         //TODO: set the right height
         if indexPath.section == 0{
-            return 300
+            return 270
         }
         else {
             return 150
