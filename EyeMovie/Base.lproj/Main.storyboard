@@ -55,7 +55,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="YI1-yx-iF2">
-                                <rect key="frame" x="0.0" y="88" width="414" height="676"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="777"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </tableView>
                         </subviews>
@@ -63,12 +63,14 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="YI1-yx-iF2" firstAttribute="top" secondItem="VGs-uA-1z7" secondAttribute="top" id="5aa-Bf-8rD"/>
-                            <constraint firstItem="VGs-uA-1z7" firstAttribute="bottom" secondItem="YI1-yx-iF2" secondAttribute="bottom" id="7YQ-vY-2ZN"/>
+                            <constraint firstItem="VGs-uA-1z7" firstAttribute="bottom" secondItem="YI1-yx-iF2" secondAttribute="bottom" constant="-101" id="7YQ-vY-2ZN"/>
                             <constraint firstItem="YI1-yx-iF2" firstAttribute="leading" secondItem="VGs-uA-1z7" secondAttribute="leading" id="JyX-Jw-4s3"/>
                             <constraint firstItem="VGs-uA-1z7" firstAttribute="trailing" secondItem="YI1-yx-iF2" secondAttribute="trailing" id="ZcA-ph-TSr"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Main" id="ysK-AX-os6"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="topTable" destination="YI1-yx-iF2" id="s1N-sC-GRE"/>
                     </connections>

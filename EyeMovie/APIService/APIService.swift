@@ -9,24 +9,139 @@ import Foundation
 
 class APIService {
     
-    //should i use result??
-    func getMockData(url: URL, completion: @escaping ([Movie]) -> Void) {
-        let movies = [Movie(title: "Movie 1", imagePath: "movie1"), Movie(title: "Movie 2", imagePath: "movie2"), Movie(title: "Movie 3", imagePath: "movie3")]
+    private var dataTask: URLSessionDataTask?
+    
+    func getPopularMoviesData(completion: @escaping (Result<MoviesData, Error>) -> Void) {
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-            completion(movies)
+        let popularMoviesUrl = "https://api.themoviedb.org/3/trending/all/week?api_key=eb21f459f41bb6dc060c3faee159b32d"
+        
+        //let popularMoviesUrlExtra = "https://api.themoviedb.org/3/trending/all/week?api_key=eb21f459f41bb6dc060c3faee159b32d&language=en-US&page=1"
+        
+        guard let url = URL(string: popularMoviesUrl) else {return}
+        
+        //guard let url2 = URL(string: popularMoviesUrlExtra) else {return}
+        
+        //Create URL session work on the background
+        
+        dataTask = URLSession.shared.dataTask(with: url) { (data, response, error) in
+            //Handle error
+            if let error = error {
+                completion(.failure(error))
+                print("DataTask error: \(error.localizedDescription)")
+                return
+            }
+            
+            guard let response = response as? HTTPURLResponse else {
+                //Handle empty response
+                print("Empty response")
+                return
+            }
+            print("Response status code: \(response.statusCode)")
+            
+            guard let data = data else {
+                //Handle empty data
+                print("Empty data")
+                return
+            }
+            
+            do {
+                //parse the data
+                let decoder = JSONDecoder()
+                let jsonData = try decoder.decode(MoviesData.self, from: data)
+                
+                DispatchQueue.main.async {
+                    completion(.success(jsonData))
+                }
+            } catch let error {
+                completion(.failure(error))
+            }
         }
+        dataTask?.resume()
         
     }
     
-    let url = URL(string: "https://api.themoviedb.org/3/trending/all/week?api_key=eb21f459f41bb6dc060c3faee159b32d")
+    func getUpcomingMoviesData(completion: @escaping (Result<MoviesData, Error>) -> Void) {
+        
+        let upcomingMoviesUrl = "https://api.themoviedb.org/3/movie/upcoming?api_key=eb21f459f41bb6dc060c3faee159b32d&language=en-US&page=1"
+        
+        guard let url = URL(string: upcomingMoviesUrl) else {return}
+        
+        dataTask = URLSession.shared.dataTask(with: url) { (data, response, error) in
+            //Handle error
+            if let error = error {
+                completion(.failure(error))
+                print("DataTask error: \(error.localizedDescription)")
+                return
+            }
+            
+            guard let response = response as? HTTPURLResponse else {
+                //Handle empty response
+                print("Empty response")
+                return
+            }
+            print("Response status code: \(response.statusCode)")
+            
+            guard let data = data else {
+                //Handle empty data
+                print("Empty data")
+                return
+            }
+            
+            do {
+                //parse the data
+                let decoder = JSONDecoder()
+                let jsonData = try decoder.decode(MoviesData.self, from: data)
+                
+                DispatchQueue.main.async {
+                    completion(.success(jsonData))
+                }
+            } catch let error {
+                completion(.failure(error))
+            }
+        }
+        dataTask?.resume()
+    }
     
+    func getTopRatedMoviesData(completion: @escaping (Result<MoviesData, Error>) -> Void) {
+        
+        let upcomingMoviesUrl = "https://api.themoviedb.org/3/movie/top_rated?api_key=eb21f459f41bb6dc060c3faee159b32d&language=en-US&page=1"
+        
+        guard let url = URL(string: upcomingMoviesUrl) else {return}
+        
+        dataTask = URLSession.shared.dataTask(with: url) { (data, response, error) in
+            //Handle error
+            if let error = error {
+                completion(.failure(error))
+                print("DataTask error: \(error.localizedDescription)")
+                return
+            }
+            
+            guard let response = response as? HTTPURLResponse else {
+                //Handle empty response
+                print("Empty response")
+                return
+            }
+            print("Response status code: \(response.statusCode)")
+            
+            guard let data = data else {
+                //Handle empty data
+                print("Empty data")
+                return
+            }
+            
+            do {
+                //parse the data
+                let decoder = JSONDecoder()
+                let jsonData = try decoder.decode(MoviesData.self, from: data)
+                
+                DispatchQueue.main.async {
+                    completion(.success(jsonData))
+                }
+            } catch let error {
+                completion(.failure(error))
+            }
+        }
+        dataTask?.resume()
+    }
     
-//    func getData(url: URL, completion: @escaping ([Movie]) -> Void) {
-//        guard url != nil else {
-//            print("Error creating url object")
-//        }
-//
-//        var request = URLRequest(url: url, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 10)
-//    }
 }

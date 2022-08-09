@@ -19,20 +19,21 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet var topTable: UITableView!
     
     
-    var topTableMoviesData = [Movie]()
-    var middleTableMoviesData = [Movie]()
+    var topSectionMoviesData = [Movie]()
+    var middleSectionMoviesData = [Movie]()
+    var downSectionMoviesData = [Movie]()
     
-    private func addMockModels(){
-        topTableMoviesData.append(Movie(title: "Movie 1", imagePath: "movie1"))
-        topTableMoviesData.append(Movie(title: "Movie 2", imagePath: "movie2"))
-        topTableMoviesData.append(Movie(title: "Movie 3", imagePath: "movie3"))
-        
-        //middle table
-        
-        middleTableMoviesData.append(Movie(title: "Movie 3", imagePath: "movie3"))
-        middleTableMoviesData.append(Movie(title: "Movie 2", imagePath: "movie2"))
-        middleTableMoviesData.append(Movie(title: "Movie 1", imagePath: "movie1"))
-    }
+//    private func addMockModels(){
+//        topTableMoviesData.append(Movie(title: "Movie 1", imagePath: "movie1"))
+//        topTableMoviesData.append(Movie(title: "Movie 2", imagePath: "movie2"))
+//        topTableMoviesData.append(Movie(title: "Movie 3", imagePath: "movie3"))
+//
+//        //middle table
+//
+//        middleTableMoviesData.append(Movie(title: "Movie 3", imagePath: "movie3"))
+//        middleTableMoviesData.append(Movie(title: "Movie 2", imagePath: "movie2"))
+//        middleTableMoviesData.append(Movie(title: "Movie 1", imagePath: "movie1"))
+//    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,25 +47,75 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         //Making the tableViews non scrollable
         
-        topTable.isScrollEnabled = false
+        topTable.isScrollEnabled = true
         topTable.separatorColor = UIColor.clear
+        
+        fetchPopularMoviesData{[weak self] in
+            self?.topTable.reloadData()
+        }
+        
+        fetchUpcomingMoviesData {[weak self] in
+            self?.topTable.reloadData()
+        }
+        
+        fetchTopRatedMoviesData {[weak self] in
+            self?.topTable.reloadData()
+        }
+        
+        //Applying the gradient
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = view.bounds
+        gradientLayer.colors = [
+            UIColor.systemGray
+        ]
+        view.layer.addSublayer(gradientLayer)
         
         // Do any additional setup after loading the view.
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    private func fetchPopularMoviesData(completion: @escaping () -> ()){
         
-        print("making a call")
-        api.getMockData(url: URL(string: "www.google.com")!) { movies in //should i use weakself?
-            print(movies)
-            self.topTableMoviesData = movies
-            
-            
-            self.middleTableMoviesData = movies
-            
-            
-            self.topTable.reloadData()
+        // weak self - prevent retain cycles
+        api.getPopularMoviesData { [weak self] (result) in
+            print(result)
+            switch result{
+            case .success(let listOf):
+                self?.topSectionMoviesData = listOf.movies
+                completion()
+                //self?.topTable.reloadData()
+            case .failure(let error):
+                print("Error processing json data: \(error)")
+            }
+        }
+    }
+    
+    private func fetchUpcomingMoviesData(completion: @escaping () -> ()){
+        // weak self - prevent retain cycles
+        api.getUpcomingMoviesData { [weak self] (result) in
+            print(result)
+            switch result{
+            case .success(let listOf):
+                self?.middleSectionMoviesData = listOf.movies
+                completion()
+                //self?.topTable.reloadData()
+            case .failure(let error):
+                print("Error processing json data: \(error)")
+            }
+        }
+    }
+    
+    private func fetchTopRatedMoviesData(completion: @escaping () -> ()){
+        // weak self - prevent retain cycles
+        api.getTopRatedMoviesData { [weak self] (result) in
+            print(result)
+            switch result{
+            case .success(let listOf):
+                self?.downSectionMoviesData = listOf.movies
+                completion()
+                //self?.topTable.reloadData()
+            case .failure(let error):
+                print("Error processing json data: \(error)")
+            }
         }
     }
     
@@ -79,18 +130,31 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         if indexPath.section == 0 {
             let cell = topTable.dequeueReusableCell(withIdentifier: CollectionTableViewCell.identifier, for: indexPath) as! CollectionTableViewCell
-            
-            cell.configure(with: topTableMoviesData)
+                        
+            cell.configure(with: topSectionMoviesData)
             return cell
             
         }
-        else
-        {
+        
+        if indexPath.section == 1 {
             let cell = topTable.dequeueReusableCell(withIdentifier: CollectionTableViewCell.identifier, for: indexPath) as! CollectionTableViewCell
             
-            cell.configure(with: middleTableMoviesData)
+            for m in middleSectionMoviesData{
+                m.isLandscape = true
+            }
+            
+            cell.configure(with: middleSectionMoviesData)
             return cell
             
+        } else {
+            let cell = topTable.dequeueReusableCell(withIdentifier: CollectionTableViewCell.identifier, for: indexPath) as! CollectionTableViewCell
+            
+            for m in downSectionMoviesData{
+                m.isLandscape = true
+            }
+            
+            cell.configure(with: downSectionMoviesData)
+            return cell
         }
         
     }
@@ -99,15 +163,15 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         //TODO: set the right height
         if indexPath.section == 0{
-            return 250
+            return 300
         }
-        else{
-            return 100
+        else {
+            return 150
         }
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 3
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -115,8 +179,11 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         if section == 0 {
             return "Top movies"
         }
-        else {
+        if section == 1 {
             return "Upcoming movies"
+        }
+        else {
+            return "Top rated movies"
         }
     }
     

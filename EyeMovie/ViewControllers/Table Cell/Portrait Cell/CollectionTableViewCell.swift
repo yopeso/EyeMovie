@@ -59,10 +59,8 @@ class CollectionTableViewCell: UITableViewCell, UICollectionViewDelegate, UIColl
         
         //        return UIImage(named: movies[indexPath.row].imagePath)!.size as CGSize
         
-        return CGSize(width: 150, height: 400)
-        
-        
-        
+        return CGSize(width: 170, height: 300)
+        //return CGSize(width: 150, height: 250)
         
     }
     
