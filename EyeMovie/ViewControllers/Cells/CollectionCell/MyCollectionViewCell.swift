@@ -26,6 +26,13 @@ class MyCollectionViewCell: UICollectionViewCell {
         // Initialization code
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        //Before we download the image we clear out the old one
+        self.myImageView.image = nil
+    }
+    
     //configure the cell by passing a model(movie in our case)
     public func configure(with movie: Movie, landscape: Bool) {
         self.myLabel.text = movie.title
@@ -47,8 +54,7 @@ class MyCollectionViewCell: UICollectionViewCell {
             return
         }
         
-        //Before we download the image we clear out the old one
-        self.myImageView.image = nil
+        
         
         getImageDataFrom(url: posterImageUrl)
         
@@ -77,5 +83,6 @@ class MyCollectionViewCell: UICollectionViewCell {
             
         }.resume()
     }
-    
 }
+
+

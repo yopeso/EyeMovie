@@ -15,13 +15,14 @@ import UIKit
 class MainViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     let api = APIService()
+    let movieData = MovieData()
     
     @IBOutlet var topTable: UITableView!
     
-    
-    var topSectionMoviesData = [Movie]()
-    var middleSectionMoviesData = [Movie]()
-    var downSectionMoviesData = [Movie]()
+//
+//    var topSectionMoviesData = [Movie]()
+//    var middleSectionMoviesData = [Movie]()
+//    var downSectionMoviesData = [Movie]()
     
     //    private func addMockModels() {
     //        topTableMoviesData.append(Movie(title: "Movie 1", imagePath: "movie1"))
@@ -50,66 +51,70 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         topTable.isScrollEnabled = true
         topTable.separatorColor = UIColor.clear
         
-        fetchPopularMoviesData{[weak self] in
+        
+        
+        //        fetchPopularMoviesData { [weak self] movies in
+        //            self?.topSectionMoviesData = movies
+        //            self?.topTable.reloadData()
+        //        }
+        
+        loadMovies() { [weak self] in
             self?.topTable.reloadData()
         }
         
-        fetchUpcomingMoviesData {[weak self] in
-            self?.topTable.reloadData()
-        }
-        
-        fetchTopRatedMoviesData {[weak self] in
-            self?.topTable.reloadData()
-        }
         
         // Do any additional setup after loading the view.
     }
     
-    private func fetchPopularMoviesData(completion: @escaping () -> ()) {
+    func loadMovies(completion: @escaping (() -> Void)) {
+        let group = DispatchGroup()
         
-        // weak self - prevent retain cycles
-        api.getPopularMoviesData { [weak self] (result) in
+        group.enter()
+        api.getPopularMoviesData { [weak self] result in
             print(result)
             switch result{
-            case .success(let listOf):
-                self?.topSectionMoviesData = listOf.movies
-                completion()
-                //self?.topTable.reloadData()
+            case .success(let movies):
+                self?.movieData.setPopular(movies: movies.movies)
+//                self?.topSectionMoviesData = movies.movies
             case .failure(let error):
                 print("Error processing json data: \(error)")
             }
+            group.leave()
+        }
+        
+        group.enter()
+        api.getUpcomingMoviesData { [weak self] result in
+            print(result)
+            switch result{
+            case .success(let movies):
+                self?.movieData.setUpcoming(movies: movies.movies)
+
+                //self?.middleSectionMoviesData = movies.movies
+            case .failure(let error):
+                print("Error processing json data: \(error)")
+            }
+            group.leave()
+        }
+        
+        group.enter()
+        api.getTopRatedMoviesData { [weak self] result in
+            print(result)
+            switch result{
+            case .success(let movies):
+                self?.movieData.setTopRated(movies: movies.movies)
+
+                //self?.downSectionMoviesData = movies.movies
+            case .failure(let error):
+                print("Error processing json data: \(error)")
+            }
+            group.leave()
+        }
+        
+        group.notify(queue: DispatchQueue.main) {
+            completion()
         }
     }
     
-    private func fetchUpcomingMoviesData(completion: @escaping () -> ()) {
-        // weak self - prevent retain cycles
-        api.getUpcomingMoviesData { [weak self] (result) in
-            print(result)
-            switch result{
-            case .success(let listOf):
-                self?.middleSectionMoviesData = listOf.movies
-                completion()
-                //self?.topTable.reloadData()
-            case .failure(let error):
-                print("Error processing json data: \(error)")
-            }
-        }
-    }
-    
-    private func fetchTopRatedMoviesData(completion: @escaping () -> ()) {
-        // weak self - prevent retain cycles
-        api.getTopRatedMoviesData { [weak self] (result) in
-            print(result)
-            switch result{
-            case .success(let listOf):
-                self?.downSectionMoviesData = listOf.movies
-                completion()
-                //self?.topTable.reloadData()
-            case .failure(let error):
-                print("Error processing json data: \(error)")
-            }
-        }
-    }
     
     //Table
     
@@ -119,28 +124,11 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
+        let cell = topTable.dequeueReusableCell(withIdentifier: TableViewCell.identifier, for: indexPath) as! TableViewCell
         
-        if indexPath.section == 0 {
-            let cell = topTable.dequeueReusableCell(withIdentifier: TableViewCell.identifier, for: indexPath) as! TableViewCell
-            
-            cell.configure(with: topSectionMoviesData)
-            cell.isPortrait = indexPath.section == 0
-            return cell
-            
-        }
+        cell.configure(with: movieData.sections[indexPath.section])
         
-        if indexPath.section == 1 {
-            let cell = topTable.dequeueReusableCell(withIdentifier: TableViewCell.identifier, for: indexPath) as! TableViewCell
-            cell.configure(with: middleSectionMoviesData)
-            cell.isPortrait = indexPath.section == 0 // or = false
-            return cell
-            
-        } else {
-            let cell = topTable.dequeueReusableCell(withIdentifier: TableViewCell.identifier, for: indexPath) as! TableViewCell
-            cell.configure(with: downSectionMoviesData)
-            cell.isPortrait = indexPath.section == 0 
-            return cell
-        }
+        return cell
         
     }
     
@@ -156,20 +144,13 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
+        return movieData.sections.count
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         
-        if section == 0 {
-            return "Top movies"
-        }
-        if section == 1 {
-            return "Upcoming movies"
-        }
-        else {
-            return "Top rated movies"
-        }
+        movieData.sections[section].title
+    
     }
     
     

@@ -122,21 +122,35 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Search" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Aae-HY-JKD">
-                                <rect key="frame" x="156" y="428.5" width="102" height="39"/>
-                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="32"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="hNS-Fi-dub">
+                                <rect key="frame" x="10" y="158" width="394" height="645"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </tableView>
+                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="331-sN-c3v">
+                                <rect key="frame" x="10" y="88" width="384" height="60"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="EVJ-5Z-4gl"/>
+                                </constraints>
+                                <textInputTraits key="textInputTraits"/>
+                            </searchBar>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="13h-5H-lDk"/>
-                        <color key="backgroundColor" systemColor="systemOrangeColor"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="Aae-HY-JKD" firstAttribute="centerY" secondItem="RAa-F7-48e" secondAttribute="centerY" id="Glv-ej-Mhx"/>
-                            <constraint firstItem="Aae-HY-JKD" firstAttribute="centerX" secondItem="RAa-F7-48e" secondAttribute="centerX" id="V7U-Pg-OrC"/>
+                            <constraint firstItem="331-sN-c3v" firstAttribute="leading" secondItem="hNS-Fi-dub" secondAttribute="leading" id="2nW-Bb-UXr"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="331-sN-c3v" secondAttribute="trailing" id="CaA-I7-otr"/>
+                            <constraint firstItem="hNS-Fi-dub" firstAttribute="top" secondItem="331-sN-c3v" secondAttribute="bottom" constant="10" id="LGw-em-Gec"/>
+                            <constraint firstItem="13h-5H-lDk" firstAttribute="bottom" secondItem="hNS-Fi-dub" secondAttribute="bottom" constant="10" id="N3J-75-6Hf"/>
+                            <constraint firstItem="hNS-Fi-dub" firstAttribute="leading" secondItem="13h-5H-lDk" secondAttribute="leading" constant="10" id="am9-qB-a9r"/>
+                            <constraint firstItem="331-sN-c3v" firstAttribute="top" secondItem="13h-5H-lDk" secondAttribute="top" id="wxX-F1-JuM"/>
+                            <constraint firstItem="13h-5H-lDk" firstAttribute="trailing" secondItem="hNS-Fi-dub" secondAttribute="trailing" constant="10" id="yZP-eB-o3m"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Search" id="zS6-t4-931"/>
+                    <connections>
+                        <outlet property="searchBar" destination="331-sN-c3v" id="lwb-7Z-zJr"/>
+                        <outlet property="table" destination="hNS-Fi-dub" id="9TN-bc-0Wc"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tXN-2W-S2q" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -150,21 +164,24 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Favorites" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="liz-nK-MAC">
-                                <rect key="frame" x="141" y="428.5" width="132.5" height="39"/>
-                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="32"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="ulm-EJ-8MO">
+                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="jWE-zo-rAk"/>
-                        <color key="backgroundColor" systemColor="systemMintColor"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="liz-nK-MAC" firstAttribute="centerX" secondItem="Sys-Zx-KZp" secondAttribute="centerX" id="GxL-a3-zTy"/>
-                            <constraint firstItem="liz-nK-MAC" firstAttribute="centerY" secondItem="Sys-Zx-KZp" secondAttribute="centerY" id="xBE-xZ-bM7"/>
+                            <constraint firstItem="ulm-EJ-8MO" firstAttribute="top" secondItem="jWE-zo-rAk" secondAttribute="top" id="57O-bA-Tmm"/>
+                            <constraint firstItem="jWE-zo-rAk" firstAttribute="trailing" secondItem="ulm-EJ-8MO" secondAttribute="trailing" id="Sjl-0X-smu"/>
+                            <constraint firstItem="jWE-zo-rAk" firstAttribute="bottom" secondItem="ulm-EJ-8MO" secondAttribute="bottom" id="YoY-KH-BGK"/>
+                            <constraint firstItem="ulm-EJ-8MO" firstAttribute="leading" secondItem="jWE-zo-rAk" secondAttribute="leading" id="gyF-jY-qo0"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Favorites" id="oLH-HC-w4u"/>
+                    <connections>
+                        <outlet property="table" destination="ulm-EJ-8MO" id="QbJ-AT-fP5"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Hog-aE-WxD" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -177,12 +194,6 @@
         <image name="star.circle" catalog="system" width="128" height="121"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemMintColor">
-            <color red="0.0" green="0.7803921568627451" blue="0.74509803921568629" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="systemOrangeColor">
-            <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

@@ -7,26 +7,40 @@
 
 import UIKit
 import CoreData
+import Foundation
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
-    
+    let userDefaults = UserDefaults.standard
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
-        setUpNavigationBar()
+        //resetUserDefaults()
+        //print("did app started??")
+        
+//        let arrayMovies = [Movie]()
+//        userDefaults.set(arrayMovies, forKey: "favoritesMovies")
         
         return true
     }
     
-    func setUpNavigationBar() {
-//        let appearance = UINavigationBarAppearance()
-//        appearance.configureWithOpaqueBackground()
-//        //appearance.backgroundColor = <your tint color>
-//        navigationBar.standardAppearance = appearance;
-//        navigationBar.scrollEdgeAppearance = navigationBar.standardAppearance
+    func resetUserDefaults() {
+        let favoritesMovies = [Movie]()
+        
+        do {
+            // create json encoder
+            let encoder = JSONEncoder()
+            
+            // encode note
+            let data = try encoder.encode(favoritesMovies)
+            
+            // write/set data
+            UserDefaults.standard.set(data, forKey: "favoritesMovies")
+        } catch {
+            print("Unable to encode Array of Notes (\(error)")
+        }
     }
     
     // MARK: UISceneSession Lifecycle
