@@ -41,11 +41,34 @@ class MovieDetailsView: UIViewController {
         title = movie.title
         print(movie.title ?? "")
         
-        let label = UILabel(frame: view.bounds)
-        view.addSubview(label)
-        label.textAlignment = .center
+        let labelTitle = UILabel(frame: CGRect(x: 15, y: 250, width: 300, height: 50))
+        labelTitle.font = UIFont(name: "verdana", size: 20)
+        view.addSubview(labelTitle)
+        labelTitle.textAlignment = .left
         
-        label.text = (title)
+        labelTitle.text = (title)
+        
+        let labelReleaseDate = UILabel(frame: CGRect(x: 15, y: 270, width: 100, height: 50))
+        view.addSubview(labelReleaseDate)
+        labelReleaseDate.textAlignment = .left
+        
+        labelReleaseDate.text = movie.release_date?.components(separatedBy: "-")[0]
+        
+        let labelGenre = UILabel(frame: CGRect(x: 40, y: 270, width: 100, height: 50))
+        view.addSubview(labelGenre)
+        labelGenre.textAlignment = .left
+        
+        labelGenre.text = movie.genres?[1]
+        
+        print(movie.genres)
+        
+        let labelOverview = UILabel(frame: CGRect(x: 15, y: 250, width: UIScreen.main.bounds.size.width - 20.0, height: 300))
+        view.addSubview(labelOverview)
+        labelOverview.textAlignment = .left
+        //labelOverview.lineBreakMode = .byWordWrapping
+        //labelOverview.sizeToFit()
+        labelOverview.numberOfLines = 15
+        labelOverview.text = movie.overview
     }
     
     private func addMovieImage(){
@@ -53,9 +76,9 @@ class MovieDetailsView: UIViewController {
         let image = UIImageView()
         
         
-        guard let imageString = movie.imagePath else {return}
+        guard let imageString = movie.landscapePath else {return}
         
-        let movieImageUrl = "https://image.tmdb.org/t/p/w300" + imageString
+        let movieImageUrl = "https://image.tmdb.org/t/p/w1280" + imageString
         
         guard let imageUrl = URL(string: movieImageUrl) else {
             image.image = UIImage(named: "error at passing the image url from the list")
@@ -64,7 +87,7 @@ class MovieDetailsView: UIViewController {
         
         getImageDataFrom(url: imageUrl, passedImage: image)
         
-        image.frame = CGRect(x: 100, y: 0, width: 200, height: 300)
+        image.frame = CGRect(x: 0, y: 0, width: 400, height: 225)
         view.addSubview(image)
     }
     
@@ -93,9 +116,10 @@ class MovieDetailsView: UIViewController {
     }
     
     private func addButton(){
-        let button = UIButton(frame: CGRect(x: 150, y: 600, width: 100, height: 50))
+        let button = UIButton(frame: CGRect(x: UIScreen.main.bounds.size.width/4, y: 600, width: 200, height: 50))
         button.backgroundColor = .yellow
         button.setTitle("Add to favourites", for: .normal)
+        button.setTitleColor(.black, for: .normal)
         button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
         
         

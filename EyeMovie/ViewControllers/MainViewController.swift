@@ -12,29 +12,21 @@ import UIKit
 // tap a cell to see info about a movie
 // custom view to see the info about the movie
 
-class MainViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class MainViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CellDelegate {
+    func movieSelected(_ indexPath: IndexPath, section: Int) {
+        //print("selected section is: \(indexPath.section)")
+        let selectedMovie = self.movieData.sections[section].movies[indexPath.item]
+        
+        let movieDetailsView = MovieDetailsView(movie: selectedMovie)
+        
+        self.present(movieDetailsView, animated: true)
+    }
+    
     
     let api = APIService()
     let movieData = MovieData()
     
     @IBOutlet var topTable: UITableView!
-    
-//
-//    var topSectionMoviesData = [Movie]()
-//    var middleSectionMoviesData = [Movie]()
-//    var downSectionMoviesData = [Movie]()
-    
-    //    private func addMockModels() {
-    //        topTableMoviesData.append(Movie(title: "Movie 1", imagePath: "movie1"))
-    //        topTableMoviesData.append(Movie(title: "Movie 2", imagePath: "movie2"))
-    //        topTableMoviesData.append(Movie(title: "Movie 3", imagePath: "movie3"))
-    //
-    //        //middle table
-    //
-    //        middleTableMoviesData.append(Movie(title: "Movie 3", imagePath: "movie3"))
-    //        middleTableMoviesData.append(Movie(title: "Movie 2", imagePath: "movie2"))
-    //        middleTableMoviesData.append(Movie(title: "Movie 1", imagePath: "movie1"))
-    //    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,12 +43,6 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         topTable.isScrollEnabled = true
         topTable.separatorColor = UIColor.clear
         
-        
-        
-        //        fetchPopularMoviesData { [weak self] movies in
-        //            self?.topSectionMoviesData = movies
-        //            self?.topTable.reloadData()
-        //        }
         
         loadMovies() { [weak self] in
             self?.topTable.reloadData()
@@ -75,7 +61,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
             switch result{
             case .success(let movies):
                 self?.movieData.setPopular(movies: movies.movies)
-//                self?.topSectionMoviesData = movies.movies
+                //                self?.topSectionMoviesData = movies.movies
             case .failure(let error):
                 print("Error processing json data: \(error)")
             }
@@ -88,7 +74,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
             switch result{
             case .success(let movies):
                 self?.movieData.setUpcoming(movies: movies.movies)
-
+                
                 //self?.middleSectionMoviesData = movies.movies
             case .failure(let error):
                 print("Error processing json data: \(error)")
@@ -102,7 +88,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
             switch result{
             case .success(let movies):
                 self?.movieData.setTopRated(movies: movies.movies)
-
+                
                 //self?.downSectionMoviesData = movies.movies
             case .failure(let error):
                 print("Error processing json data: \(error)")
@@ -127,7 +113,9 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         let cell = topTable.dequeueReusableCell(withIdentifier: TableViewCell.identifier, for: indexPath) as! TableViewCell
         
         cell.configure(with: movieData.sections[indexPath.section])
+        cell.section = indexPath.section
         
+        cell.delegate = self
         return cell
         
     }
@@ -150,7 +138,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         
         movieData.sections[section].title
-    
+        
     }
     
     
@@ -162,8 +150,12 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         header.textLabel?.frame = header.bounds
         header.textLabel?.textAlignment = .left
         
-        
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("section is: \(indexPath.section)")
+    }
+    
     
 }
 

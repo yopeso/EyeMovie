@@ -54,8 +54,6 @@ class MyCollectionViewCell: UICollectionViewCell {
             return
         }
         
-        
-        
         getImageDataFrom(url: posterImageUrl)
         
     }

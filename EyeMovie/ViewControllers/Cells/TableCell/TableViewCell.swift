@@ -10,6 +10,8 @@ import UIKit
 class TableViewCell: UITableViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     static let identifier = "CollectionTableViewCell"
+    var delegate : CellDelegate?
+    var section: Int = 0
     
     static func nib() -> UINib{
         return UINib(nibName: "CollectionTableViewCell", bundle: nil)
@@ -61,11 +63,6 @@ class TableViewCell: UITableViewCell, UICollectionViewDelegate, UICollectionView
         
         isPortrait ? CGSize(width: 170, height: 150) : CGSize(width: 170, height: 300)
         
-//        if isPortrait {
-//            return CGSize(width: 170, height: 150)
-//        } else {
-//            return CGSize(width: 170, height: 300)
-//        }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
@@ -73,14 +70,14 @@ class TableViewCell: UITableViewCell, UICollectionViewDelegate, UICollectionView
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        collectionView.deselectItem(at: indexPath, animated: true)
-//        let selectedMovie = self.movies[indexPath.item]
-//        let movieDetalsView = MovieDetailsView(movie: selectedMovie)
-//        print(selectedMovie.title)
         
-        //self.present(movieDetalsView, animated: true)
+        //print(indexPath.section)
+        
+        delegate?.movieSelected(indexPath, section: section)
     }
     
 }
 
-
+protocol CellDelegate {
+    func movieSelected(_ indexPath: IndexPath, section: Int)
+}

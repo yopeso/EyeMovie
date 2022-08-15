@@ -16,17 +16,42 @@ struct MoviesData: Codable {
 }
 
 struct Movie: Codable {
-    init(id: Int, title: String?, imagePath: String?, landscapePath: String?) {
+    init(id: Int, title: String?, imagePath: String?, landscapePath: String?, release_date: String?, genres: [String]?, overview: String?) {
         self.id = id
         self.title = title
         self.imagePath = imagePath
         self.landscapePath = landscapePath
+        self.release_date = release_date
+        self.genres = genres
+        self.overview = overview
     }
+    
+    
+//    init(id: Int, title: String?, imagePath: String?, landscapePath: String?, release_date: String?) {
+//        self.id = id
+//        self.title = title
+//        self.imagePath = imagePath
+//        self.landscapePath = landscapePath
+//        self.release_date = release_date
+//    }
+    
+//    init(id: Int, title: String?, imagePath: String?, landscapePath: String?) {
+//        self.id = id
+//        self.title = title
+//        self.imagePath = imagePath
+//        self.landscapePath = landscapePath
+//    }
+    
+    
     
     let id: Int
     let title: String?
     let imagePath: String?
     let landscapePath: String?
+    let release_date: String?
+    let genres: [String]?
+    let overview: String?
+    
   
 //    init(id: Int, title: String, imagePath: String, landscapePath: String) {
 //        self.title = title
@@ -35,7 +60,7 @@ struct Movie: Codable {
 //    }
     
     private enum CodingKeys: String, CodingKey{
-        case id
+        case id, release_date, genres, overview
         case title = "title"
         case imagePath = "poster_path"
         case landscapePath = "backdrop_path"

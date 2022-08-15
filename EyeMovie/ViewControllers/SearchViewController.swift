@@ -88,10 +88,10 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: SearchMovieViewCell.identifier, for: indexPath) as! SearchMovieViewCell
         
-        for movie in moviesData{
-            print(movie.title)
-            print(movie.id)
-        }
+//        for movie in moviesData{
+//            print(movie.title)
+//            print(movie.id)
+//        }
         
         cell.configure(with: moviesData[indexPath.row])
         
